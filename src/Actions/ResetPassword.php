@@ -1,6 +1,6 @@
-<?php namespace Lean\GformsLogin\Actions;
+<?php namespace Lean\Gforms\Actions;
 
-use Lean\GformsLogin\Utils;
+use Lean\Gforms\Utils;
 
 /**
  * Class ResetPassword.
@@ -27,7 +27,7 @@ class ResetPassword
 	public static function validation( $validation_result ) {
 		$form = $validation_result['form'];
 
-		$username = Utils::get_field_value( $form, 'username' );
+		$username = Utils::get_field_value( $form, 'user_login' );
 
 		if ( ! empty( $username ) ) {
 			if ( ! function_exists( 'retrieve_password' ) ) {

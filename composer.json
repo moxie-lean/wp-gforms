@@ -16,7 +16,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Lean\\GformsLogin\\": "src/"
+      "Lean\\Gforms\\": "src/"
     }
   },
   "require-dev": {
