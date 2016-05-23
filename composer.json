@@ -1,8 +1,8 @@
 {
-  "name": "moxie-lean/wp-gforms-login",
-  "description": "Login with Gravity Forms",
+  "name": "moxie-lean/wp-gravity-forms",
+  "description": "Extends Gravity Forms",
   "keywords": ["wordpress"],
-  "homepage": "https://github.com/moxie-leean/wp-gforms-login",
+  "homepage": "https://github.com/moxie-lean/wp-gravity-forms",
   "type": "library",
   "license": "MIT",
   "authors": [
