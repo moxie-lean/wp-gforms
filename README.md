@@ -1,4 +1,4 @@
-# Gravity Forms Login
+# Gravity Forms Actions
 A variety of actions using Gravity Forms as a front-end.
 
 ## Getting Started
