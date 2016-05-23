@@ -1,6 +1,6 @@
-<?php namespace Lean\GformsLogin\Actions;
+<?php namespace Lean\Gforms\Actions;
 
-use Lean\GformsLogin\Utils;
+use Lean\Gforms\Utils;
 
 /**
  * Class Login.
@@ -27,14 +27,14 @@ class Login
 	public static function validation( $validation_result ) {
 		$form = $validation_result['form'];
 
-		$username = Utils::get_field_value( $form, 'username' );
+		$username = Utils::get_field_value( $form, 'user_login' );
 
 		if ( strpos( $username, '@' ) ) {
 			$user_info = get_user_by( 'email', $username );
 			$username = $user_info ? $user_info->user_login : false;
 		}
 
-		$password = Utils::get_field_value( $form, 'password' );
+		$password = Utils::get_field_value( $form, 'user_pass' );
 
 		$user = wp_signon( [
 			'user_login' => $username,

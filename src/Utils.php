@@ -1,4 +1,4 @@
-<?php namespace Lean\GformsLogin;
+<?php namespace Lean\Gforms;
 
 /**
  * Utils.
@@ -23,15 +23,15 @@ class Utils {
 	public static function get_field_value( $form, $admin_label ) {
 		foreach ( $form['fields'] as $index => $field ) {
 
-			// @codingStandardsIgnoreStart - $field-adminLabel is defined in gforms, we can't use snake_case.
 			if ( $admin_label === $field->adminLabel ) {
-				// @codingStandardsIgnoreEnd.
 
 				$key = 'input_' . $form['fields'][ $index ]['id'];
 
+				// @codingStandardsIgnoreStart - doesn't make sense to use a nonce here, as we might be working with a detached frontend.
 				if ( isset( $_POST[ $key ] ) ) {
 					return sanitize_text_field( wp_unslash( $_POST[ $key ] ) );
 				}
+				// @codingStandardsIgnoreEnd.
 			}
 		}
 
