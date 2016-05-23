@@ -32,7 +32,7 @@ include '/vendor/autoload.php';
 This package contains a number of actions which hook into Gravity Forms and run when the form is submitted. They rely on certain Admin Labels being set-up in the form builder.
 
 ### Login
-Logs the user user into WordPress.
+Logs the user into WordPress.
 
 ```
 \Lean\Gforms\Actions\Login::init( $form_id );
@@ -53,7 +53,7 @@ Requires fields with the following Admin Labels:
 - user_login - either the username or email.
 
 ### Signup
-Logs the user user into WordPress.
+Creates a new user account from the form data.
 
 ```
 \Lean\Gforms\Actions\Signup::init( $form_id );
