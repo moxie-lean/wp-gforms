@@ -15,6 +15,7 @@ class ResetPassword
 	public static function init( $form_id ) {
 		if ( Utils::is_active() && ! empty( $form_id ) ) {
 			add_action( 'gform_validation_' . $form_id, [ __CLASS__, 'validation' ] );
+			add_filter( 'gform_confirmation_' . $form_id, [ __CLASS__, 'confirmation' ], 10, 1 );
 		}
 	}
 
@@ -42,5 +43,17 @@ class ResetPassword
 		}
 
 		return $validation_result;
+	}
+
+	/**
+	 * Add cookies to the confirmation message as a commented html.
+	 *
+	 * @param string $confirmation The current confirmation message
+	 * @return string $confirmation The new confirmation message
+	 */
+	public static function confirmation( $confirmation ) {
+		$confirmation .= '<!--cookies:' . wp_json_encode( Utils::get_cookies() ) . '-->';
+
+		return $confirmation;
 	}
 }
