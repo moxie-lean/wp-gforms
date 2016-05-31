@@ -55,4 +55,16 @@ class Utils {
 
 		return $cookies;
 	}
+
+	/**
+	 * Add cookies to the confirmation message as a commented html.
+	 *
+	 * @param string $confirmation The current confirmation message
+	 * @return string $confirmation The new confirmation message
+	 */
+	public static function confirmation( $confirmation ) {
+		$confirmation .= '<!--cookies:' . wp_json_encode( self::get_cookies() ) . '-->';
+
+		return $confirmation;
+	}
 }
