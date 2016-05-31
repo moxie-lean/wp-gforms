@@ -37,4 +37,34 @@ class Utils {
 
 		return false;
 	}
+
+	/**
+	 * Get cookies from current request
+	 *
+	 * @return array
+	 */
+	public static function get_cookies() {
+		$headers = headers_list();
+		$cookies = [];
+
+		foreach ( $headers as $header ) {
+			if ( stripos( $header, 'Set-Cookie' ) === 0 ) {
+				$cookies[] = $header;
+			}
+		}
+
+		return $cookies;
+	}
+
+	/**
+	 * Add cookies to the confirmation message as a commented html.
+	 *
+	 * @param string $confirmation The current confirmation message
+	 * @return string $confirmation The new confirmation message
+	 */
+	public static function confirmation( $confirmation ) {
+		$confirmation .= '<!--cookies:' . wp_json_encode( self::get_cookies() ) . '-->';
+
+		return $confirmation;
+	}
 }
