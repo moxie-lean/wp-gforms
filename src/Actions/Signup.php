@@ -74,7 +74,7 @@ class Signup
 
 		$args['user_login'] = isset( $args['user_login'] ) && $args['user_login'] ?
 			$args['user_login'] :
-			self::generate_username( $args['user_email'] );
+			self::generate_username( $args );
 
 		$user_id = wp_insert_user( $args );
 
@@ -137,15 +137,29 @@ class Signup
 	}
 
 	/**
-	 * Work out a username based on a string.
+	 * Work out a username based on some args.
 	 *
-	 * @param string $string The string to base the username on.
+	 * @param array $args The args to base the username on.
 	 * @return string The unique username.
 	 */
-	private static function generate_username( $string ) {
-		$username = sanitize_title( $string );
+	private static function generate_username( $args ) {
+		if ( isset( $args['display_name'] ) ) {
+			$username = $args['display_name'];
+		} else {
+			$username =
+				( isset( $args['first_name'] ) ? $args['first_name'] : '' ).
+				( isset( $args['first_name'] ) && isset( $args['last_name'] ) ? '-' : '' ) .
+				( isset( $args['last_name'] ) ? $args['last_name'] : '' );
+		}
+
+		if ( ! $username ) {
+			$username = rand( 10000000, 99999999 );
+		}
+
+		$username = sanitize_title( $username );
 
 		$index = 1;
+
 		while ( username_exists( $username ) ) {
 			if ( $index > 1 ) {
 				$username = substr( $username, 0, -( strlen( $index ) + 1 ) );
