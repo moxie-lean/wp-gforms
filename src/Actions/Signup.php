@@ -147,13 +147,13 @@ class Signup
 			$username = $args['display_name'];
 		} else {
 			$username =
-				( isset( $args['first_name'] ) ? $args['first_name'] : '' ).
-				( isset( $args['first_name'] ) && isset( $args['last_name'] ) ? '-' : '' ) .
+				( isset( $args['first_name'] ) ? $args['first_name'] : '' ) .
+				' ' .
 				( isset( $args['last_name'] ) ? $args['last_name'] : '' );
 		}
 
 		if ( ! $username ) {
-			$username = rand( 10000000, 99999999 );
+			$username = strtok( $args['user_email'], '@' );
 		}
 
 		$username = sanitize_title( $username );
