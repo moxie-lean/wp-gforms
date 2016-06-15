@@ -1,4 +1,5 @@
 <?php namespace Lean\Gforms;
+use GFAPI;
 
 /**
  * Utils.
@@ -66,5 +67,16 @@ class Utils {
 		$confirmation .= '<!--cookies:' . wp_json_encode( self::get_cookies() ) . '-->';
 
 		return $confirmation;
+	}
+
+	/**
+	 * Delete the form entry after the form is submitted.
+	 * Usefull for Login/Signup forms, because we don't want
+	 * to store plain text passwords in the database as an entry.
+	 *
+	 * @param object $entry Gravity Forms entry.
+	 */
+	public static function delete_entries( $entry ) {
+		GFAPI::delete_entry( $entry['id'] );
 	}
 }
