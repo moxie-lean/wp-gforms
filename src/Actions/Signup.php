@@ -147,10 +147,11 @@ class Signup
 		if ( isset( $args['display_name'] ) ) {
 			$username = $args['display_name'];
 		} else {
-			$username =
+			$username = trim(
 				( isset( $args['first_name'] ) ? $args['first_name'] : '' ) .
 				' ' .
-				( isset( $args['last_name'] ) ? $args['last_name'] : '' );
+				( isset( $args['last_name'] ) ? $args['last_name'] : '' )
+			);
 		}
 
 		if ( ! $username ) {
