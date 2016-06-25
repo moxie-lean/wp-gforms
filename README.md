@@ -17,7 +17,7 @@ Or by adding the following lines on your `composer.json` file
 }
 ```
 
-This will download the files from the [packagelist site](https://packagist.org/packages/moxie-lean/wp-gravity-forms) 
+This will download the files from the [packagist site](https://packagist.org/packages/moxie-lean/wp-gravity-forms) 
 and set you up with the latest version located on master branch of the repository. 
 
 After that you can include the `autoload.php` file in order to
