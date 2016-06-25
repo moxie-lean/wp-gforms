@@ -6,18 +6,18 @@ A variety of actions using Gravity Forms as a front-end.
 The easiest way to install this package is by using composer from your terminal:
 
 ```bash
-composer require moxie-lean/wp-gforms --save
+composer require moxie-lean/wp-gravity-forms --save
 ```
 
 Or by adding the following lines on your `composer.json` file
 
 ```json
 "require": {
-  "moxie-lean/wp-gforms": "dev-master"
+  "moxie-lean/wp-gravity-forms": "dev-master"
 }
 ```
 
-This will download the files from the [packagelist site](https://packagist.org/packages/moxie-lean/wp-gforms-login) 
+This will download the files from the [packagelist site](https://packagist.org/packages/moxie-lean/wp-gravity-forms) 
 and set you up with the latest version located on master branch of the repository. 
 
 After that you can include the `autoload.php` file in order to
