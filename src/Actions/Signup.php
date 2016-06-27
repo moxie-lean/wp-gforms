@@ -13,7 +13,7 @@ class Signup
 	 * @param int $form_id The form id.
 	 */
 	public static function init( $form_id ) {
-		if ( Utils::is_active() && ! empty( $form_id ) ) {
+		if ( ! empty( $form_id ) ) {
 			add_action( 'gform_validation_' . $form_id, [ __CLASS__, 'validation' ] );
 			add_filter( 'gform_confirmation_' . $form_id, [ 'Lean\Gforms\Utils', 'confirmation' ] );
 			add_filter( 'gform_after_submission_' . $form_id, [ 'Lean\Gforms\Utils', 'delete_entries' ] );
