@@ -11,15 +11,7 @@ class Utils {
 	 * @return bool
 	 */
 	public static function is_active() {
-		if ( ! did_action('plugins_loaded' ) ) {
-			_doing_it_wrong(
-				__METHOD__,
-				'Plugins haven\'t been loaded yet, it\'s too early to call this function.',
-				'0.1.4'
-			);
-		}
-
-		return class_exists( '\GFFormsModel' );
+		return is_plugin_active( 'gravityforms/gravityforms.php' );
 	}
 
 	/**
