@@ -11,7 +11,9 @@ class Utils {
 	 * @return bool
 	 */
 	public static function is_active() {
-		return class_exists( '\GFFormsModel' );
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
+
+		return is_plugin_active( 'gravityforms/gravityforms.php' );
 	}
 
 	/**
