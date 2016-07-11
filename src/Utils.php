@@ -11,7 +11,7 @@ class Utils {
 	 * @return bool
 	 */
 	public static function is_active() {
-		include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 		return is_plugin_active( 'gravityforms/gravityforms.php' );
 	}
