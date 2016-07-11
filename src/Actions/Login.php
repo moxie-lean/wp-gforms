@@ -50,6 +50,8 @@ class Login
 			$validation_result['form']['fields'][0]->failed_validation = true;
 		}
 
+		wp_set_current_user( $user->ID );
+
 		return $validation_result;
 	}
 }

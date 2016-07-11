@@ -4,9 +4,9 @@ use Lean\Gforms\Utils;
 use Lean\Gforms\Validate;
 
 /**
- * Class Signup.
+ * Class Update.
  */
-class Signup
+class Update
 {
 	/**
 	 * Init.
@@ -22,7 +22,7 @@ class Signup
 	}
 
 	/**
-	 * Validate the data and insert the user.
+	 * Validate the data and update the user.
 	 *
 	 * @param array $validation_result The results.
 	 * @return mixed
@@ -40,7 +40,7 @@ class Signup
 
 		$form = $validation_result['form'];
 
-		$args = [];
+		$args = [ 'ID' => get_current_user_id() ];
 
 		$errors = [];
 
@@ -52,13 +52,13 @@ class Signup
 			}
 		}
 
-		if ( ! ( isset( $args['user_email'] ) && isset( $args['user_pass'] ) ) ) {
-			throw new \Exception( 'The signup form must have user_email and user_pass fields.' );
+		if ( isset( $args['user_email'] ) ) {
+			$errors['user_email'] = Validate::email( $args['user_email'] );
 		}
 
-		$errors['user_email'] = Validate::email( $args['user_email'] );
-
-		$errors['user_pass'] = Validate::password( $args['user_pass'] );
+		if ( isset( $args['user_pass'] ) ) {
+			$errors['user_pass'] = Validate::password( $args['user_pass'] );
+		}
 
 		if ( array_filter( $errors ) ) {
 			// There's an error in a specific field if we get here.
@@ -74,11 +74,7 @@ class Signup
 			return $validation_result;
 		}
 
-		$args['user_login'] = isset( $args['user_login'] ) && $args['user_login'] ?
-			$args['user_login'] :
-			self::generate_username( $args );
-
-		$user_id = wp_insert_user( $args );
+		$user_id = wp_update_user( $args );
 
 		if ( is_wp_error( $user_id ) ) {
 			// There was an error when inserting the user if we get here.
@@ -93,9 +89,25 @@ class Signup
 			return $validation_result;
 		}
 
-		wp_new_user_notification( $user_id, null, 'both' );
-
 		return $validation_result;
+	}
+
+	/**
+	 * Validate the email address.
+	 *
+	 * @param string $email The email.
+	 * @return string
+	 */
+	private static function email_validation( $email ) {
+		if ( ! is_email( $email ) ) {
+			return 'Invalid email address.';
+		}
+
+		if ( email_exists( $email ) ) {
+			return 'This email address already exists.';
+		}
+
+		return '';
 	}
 
 	/**
