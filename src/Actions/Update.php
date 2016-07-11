@@ -93,24 +93,6 @@ class Update
 	}
 
 	/**
-	 * Validate the email address.
-	 *
-	 * @param string $email The email.
-	 * @return string
-	 */
-	private static function email_validation( $email ) {
-		if ( ! is_email( $email ) ) {
-			return 'Invalid email address.';
-		}
-
-		if ( email_exists( $email ) ) {
-			return 'This email address already exists.';
-		}
-
-		return '';
-	}
-
-	/**
 	 * Work out a username based on some args.
 	 *
 	 * @param array $args The args to base the username on.
