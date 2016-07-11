@@ -91,40 +91,4 @@ class Update
 
 		return $validation_result;
 	}
-
-	/**
-	 * Work out a username based on some args.
-	 *
-	 * @param array $args The args to base the username on.
-	 * @return string The unique username.
-	 */
-	private static function generate_username( $args ) {
-		if ( isset( $args['display_name'] ) ) {
-			$username = $args['display_name'];
-		} else {
-			$username = trim(
-				( isset( $args['first_name'] ) ? $args['first_name'] : '' ) .
-				' ' .
-				( isset( $args['last_name'] ) ? $args['last_name'] : '' )
-			);
-		}
-
-		if ( ! $username ) {
-			$username = strtok( $args['user_email'], '@' );
-		}
-
-		$username = sanitize_title( $username );
-
-		$index = 1;
-
-		while ( username_exists( $username ) ) {
-			if ( $index > 1 ) {
-				$username = substr( $username, 0, -( strlen( $index ) + 1 ) );
-			}
-			$index ++;
-			$username .= '-' . $index;
-		}
-
-		return $username;
-	}
 }
