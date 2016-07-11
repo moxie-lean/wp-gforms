@@ -77,7 +77,7 @@ class Update
 		$user_id = wp_update_user( $args );
 
 		if ( is_wp_error( $user_id ) ) {
-			// There was an error when inserting the user if we get here.
+			// There was an error updating the user if we get here.
 			foreach ( $user_id->errors as $error ) {
 				$validation_result['form']['fields'][0]->validation_message = '<p>' . $error[0] . '</p>';
 			}
