@@ -48,9 +48,9 @@ class Login
 			$validation_result['is_valid'] = false;
 			$validation_result['form']['fields'][0]->validation_message = 'Invalid username or password.';
 			$validation_result['form']['fields'][0]->failed_validation = true;
+		} else {
+			wp_set_current_user( $user->ID );
 		}
-
-		wp_set_current_user( $user->ID );
 
 		return $validation_result;
 	}
