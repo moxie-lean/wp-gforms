@@ -30,7 +30,6 @@ class Update
 	 */
 	public static function validation( $validation_result ) {
 		$valid_args = [
-			'user_login',
 			'user_pass',
 			'user_email',
 			'display_name',
