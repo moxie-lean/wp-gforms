@@ -4,9 +4,9 @@ use Lean\Gforms\Utils;
 use Lean\Gforms\Validate;
 
 /**
- * Class Signup.
+ * Class Update.
  */
-class Signup
+class Update
 {
 	/**
 	 * Init.
@@ -22,7 +22,7 @@ class Signup
 	}
 
 	/**
-	 * Validate the data and insert the user.
+	 * Validate the data and update the user.
 	 *
 	 * @param array $validation_result The results.
 	 * @return mixed
@@ -30,7 +30,6 @@ class Signup
 	 */
 	public static function validation( $validation_result ) {
 		$valid_args = [
-			'user_login',
 			'user_pass',
 			'user_email',
 			'display_name',
@@ -40,7 +39,7 @@ class Signup
 
 		$form = $validation_result['form'];
 
-		$args = [];
+		$args = [ 'ID' => get_current_user_id() ];
 
 		$errors = [];
 
@@ -52,13 +51,13 @@ class Signup
 			}
 		}
 
-		if ( ! ( isset( $args['user_email'] ) && isset( $args['user_pass'] ) ) ) {
-			throw new \Exception( 'The signup form must have user_email and user_pass fields.' );
+		if ( isset( $args['user_email'] ) ) {
+			$errors['user_email'] = Validate::email( $args['user_email'] );
 		}
 
-		$errors['user_email'] = Validate::email( $args['user_email'] );
-
-		$errors['user_pass'] = Validate::password( $args['user_pass'] );
+		if ( isset( $args['user_pass'] ) ) {
+			$errors['user_pass'] = Validate::password( $args['user_pass'] );
+		}
 
 		if ( array_filter( $errors ) ) {
 			// There's an error in a specific field if we get here.
@@ -74,14 +73,10 @@ class Signup
 			return $validation_result;
 		}
 
-		$args['user_login'] = isset( $args['user_login'] ) && $args['user_login'] ?
-			$args['user_login'] :
-			self::generate_username( $args );
-
-		$user_id = wp_insert_user( $args );
+		$user_id = wp_update_user( $args );
 
 		if ( is_wp_error( $user_id ) ) {
-			// There was an error when inserting the user if we get here.
+			// There was an error updating the user if we get here.
 			foreach ( $user_id->errors as $error ) {
 				$validation_result['form']['fields'][0]->validation_message = '<p>' . $error[0] . '</p>';
 			}
@@ -93,44 +88,6 @@ class Signup
 			return $validation_result;
 		}
 
-		wp_new_user_notification( $user_id, null, 'both' );
-
 		return $validation_result;
-	}
-
-	/**
-	 * Work out a username based on some args.
-	 *
-	 * @param array $args The args to base the username on.
-	 * @return string The unique username.
-	 */
-	private static function generate_username( $args ) {
-		if ( isset( $args['display_name'] ) ) {
-			$username = $args['display_name'];
-		} else {
-			$username = trim(
-				( isset( $args['first_name'] ) ? $args['first_name'] : '' ) .
-				' ' .
-				( isset( $args['last_name'] ) ? $args['last_name'] : '' )
-			);
-		}
-
-		if ( ! $username ) {
-			$username = strtok( $args['user_email'], '@' );
-		}
-
-		$username = sanitize_title( $username );
-
-		$index = 1;
-
-		while ( username_exists( $username ) ) {
-			if ( $index > 1 ) {
-				$username = substr( $username, 0, -( strlen( $index ) + 1 ) );
-			}
-			$index ++;
-			$username .= '-' . $index;
-		}
-
-		return $username;
 	}
 }
